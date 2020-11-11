@@ -1,0 +1,100 @@
+.Toolbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+}
+
+.Navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color:#F4F4F4;
+}
+
+.Nav {
+    display: flex;
+    width: 80%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Brand {
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 800;
+    color: #FF5972;
+}
+
+.Hamburger {
+    font-size: 25px;
+    outline: none;
+    color: #FF5972;
+    display: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.navUl {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    padding-inline-start: 0px;
+}
+
+.Link {
+    display: inline-block;
+    padding: 5px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+    margin: 0px 10px;
+}
+
+.BtnSolid {
+    background-color: #FF5972;
+    color: #F4F4F4;
+    border-radius: 25px;
+    border: 2px solid #FF5972;
+}
+
+.BtnInverse {
+    border: 2px solid #FF5972;
+    color: #FF5972;
+    border-radius: 25px;
+}
+
+.Selected {
+    border-bottom: 3px solid #FF5972;
+}
+
+@media (max-width: 500px) {
+    .Link {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 426px) {
+
+    .Nav {
+        width: 100%;
+    }
+    
+    .Brand {
+        padding: 20px;
+    }
+    
+    .Hamburger {
+        display: block;
+    }
+
+    .navUl {
+        display: none;
+    }
+
+}
