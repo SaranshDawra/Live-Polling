@@ -1,0 +1,94 @@
+.Banner {
+    box-sizing: border-box;
+    height: 200px;
+    background-color: #fcdbe2;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.BannerText {
+    padding-left: 30px;
+}
+
+.BannerText h3 {
+    margin: 0px;
+    color: #FF5972;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.BannerText div {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.BannerImg {
+    height: 180px;
+    width: 275px;
+}
+
+@media screen and (max-width: 500px) {
+
+    .Banner {
+        display: flex;
+        flex-direction: column;
+        height: 375px;
+    }
+
+    .BannerText {
+        padding: 10px;
+    }
+
+    .BannerText h3 {
+        font-size: 20px;
+    }
+
+    .BannerText div {
+        font-size: 18px;
+    }
+
+    .BannerImg {
+        height: 180px;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 660px) and (min-width: 500px) {
+    .BannerImg {
+        height: 150px;
+        width: 200px;
+    }
+
+    .BannerText h3 {
+        font-size: 18px;
+    }
+    
+    .BannerText div {
+        font-size: 15px;
+    }
+
+}
+
+
+@media screen and (max-width: 768px) and (min-width: 660px) {
+    .BannerText h3 {
+        font-size: 20px;
+    }
+    
+    .BannerText div {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 960px) and (min-width: 768px) {
+    .BannerText h3 {
+        font-size: 25px;
+    }
+    
+    .BannerText div {
+        font-size: 18px;
+    }
+}
