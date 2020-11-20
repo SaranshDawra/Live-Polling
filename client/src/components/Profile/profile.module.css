@@ -1,0 +1,38 @@
+.Container {
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.InnerContainer {
+    width: 80%;
+}
+
+.PollSection {
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.Polls {
+    width: 60%;
+    height: 2000px;
+    border: 1px solid #FF5972;
+    border-radius: 25px;
+}
+
+@media screen and (max-width: 768px) {
+    .PollSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Polls {
+        width: 100%;
+    }
+}
