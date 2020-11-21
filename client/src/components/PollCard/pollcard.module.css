@@ -1,0 +1,86 @@
+.Container {
+    width: 100%;
+    background-color: #fcdbe2;
+    border-radius: 25px;
+    box-sizing: border-box;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 25px;
+}
+
+.Btn {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.Question {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FF5972;
+    margin-bottom: 20px;
+}
+
+.DeleteBtn {
+    height: 20px;
+    width: 100px;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 5px;
+    color: #F4F4F4;
+    text-align: center;
+    background-color: #FF5972;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.Line {
+    width: 100%;
+    height: 1px;
+    background-color: #FF5972;
+}
+
+.OptionSection {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+
+.OptionCard {
+    width: 40%;
+    font-size: 20px;
+    background-color: #FF5972;
+    border-radius: 25px;
+    border-bottom-left-radius: 0px;
+    padding: 20px;
+    color: #F4F4F4;
+    margin: 20px 0px;
+}
+
+.Count {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.Count::before {
+    content: '';
+    height: 1px;
+    width:100%;
+    background-color: #F4F4F4;
+    display: block;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 670px) {
+    .OptionSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .OptionCard {
+        width: 80%;
+    }
+}
