@@ -22,7 +22,7 @@ const Sidebar = (props) => {
                             onClick={props.clicked}
                             className={classes.Menu}
                         >
-                            Menu
+                            HOME
                         </Link>
                         <FaTimes
                             className={classes.Cross}
@@ -31,30 +31,20 @@ const Sidebar = (props) => {
                     </li>
                     <li>
                         <Link
-                            to="/learn"
+                            to="/signin"
                             className={classes.Link}
                             onClick={props.clicked}
                         >
-                            Learn
+                            SIGNIN
                         </Link>
                     </li>
                     <li>
                         <Link
-                            to="/code"
+                            to="/signup"
                             className={classes.Link}
                             onClick={props.clicked}
                         >
-                            Code
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/gethired"
-                            className={classes.Link}
-                            style={{ paddingRight: "0px" }}
-                            onClick={props.clicked}
-                        >
-                            Jobs
+                            SIGNUP
                         </Link>
                     </li>
                 </ul>

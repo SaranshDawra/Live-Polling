@@ -51,9 +51,10 @@
 .Menu{
     width: 170px;
     font-size: 25px;
+    font-weight: 700;
     padding: 0px 20px;
     text-decoration: none;
-    color: #04093f;
+    color: #FF5972;
 }
 
 .Cross {
@@ -73,7 +74,7 @@
 }
 
 .Link {
-    color: #04093f;
+    color: #FF5972;
     font-size: 20px;
     padding: 10px 20px;
     text-decoration: none;
