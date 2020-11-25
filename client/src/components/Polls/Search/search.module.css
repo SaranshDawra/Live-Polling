@@ -1,0 +1,38 @@
+.Container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Form {
+    position: relative;
+    padding: 35px;
+    text-align: center;
+    width: 80%;
+}
+
+.Input {
+    text-indent: 40px;
+    padding: 5px 15px;
+    width: 80%;
+    font-size: 25px;
+    font-weight: lighter;
+    border-radius: 25px;
+    outline: none;
+    height: 40px;
+    background-color: #F4F4F4;
+    color: #Ff5972;
+    border: 2px solid #Ff5972;
+}
+.Input::placeholder{
+    color: #Ff5972;
+}
+
+.SearchIcon {
+    position: absolute;
+    padding-top: 18px;
+    padding-left: 15px;
+    font-size: 20px;
+    color: #Ff5972;
+}
