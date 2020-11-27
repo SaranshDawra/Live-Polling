@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const users = require('./routes/users');
+const polls = require('./routes/polls');
 require("dotenv").config();
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose
     });
 
 app.use('/api/user', users);
+app.use('/api/polls', polls);
 
 const port = process.env.PORT || 5000;
 
