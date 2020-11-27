@@ -27,17 +27,15 @@ router.put("/:qid", async (req, res) => {
         const { option, userId } = req.body;
 
         const poll = await Poll.findById(qid);
-        
 
-        if(poll.votes.includes(userId)) {
+        if (poll.votes.includes(userId)) {
             return res.send("You have already voted!");
         }
 
         if (option === 0 && !vote.optionA.includes(userId)) {
             vote.optionA.push(userId);
             vote = await vote.save();
-        }
-        else if (option === 1 && !vote.optionB.includes(userId)) {
+        } else if (option === 1 && !vote.optionB.includes(userId)) {
             vote.optionB.push(userId);
             vote = await vote.save();
         }
