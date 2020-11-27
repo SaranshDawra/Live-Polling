@@ -1,5 +1,6 @@
 const express = require("express");
 const Poll = require("../models/poll");
+const Vote = require("../models/vote");
 const User = require("../models/user");
 const router = express();
 
@@ -37,6 +38,8 @@ router.post("/", async (req, res) => {
 
     try {
         poll = await poll.save();
+        const vote = new Vote({ questionId: poll._id });
+        await vote.save();
         return res.status(200).send(poll);
     } catch (err) {
         return res
@@ -52,8 +55,8 @@ router.put("/:qid", async (req, res) => {
         if (!poll) {
             return res.status(404).send("No Poll Exists");
         }
-        if(poll.votes.includes(req.body.userId)) {
-            return res.send('Already voted');
+        if (poll.votes.includes(req.body.userId)) {
+            return res.send("Already voted");
         }
         poll.votes.push(req.body.userId);
         poll = await poll.save();
