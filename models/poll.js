@@ -10,8 +10,16 @@ const pollSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    votesA: {
+        type: Array,
+        required: true,
+    },
     optionB: {
         type: String,
+        required: true,
+    },
+    votesB: {
+        type: Array,
         required: true,
     },
     userId: {

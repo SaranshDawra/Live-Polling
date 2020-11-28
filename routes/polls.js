@@ -1,9 +1,9 @@
 const express = require("express");
 const Poll = require("../models/poll");
-const Vote = require("../models/vote");
 const User = require("../models/user");
 const router = express();
 
+// When we render the poll on the all polls page
 router.get("/", async (req, res) => {
     try {
         const polls = await Poll.find().select("-userId");
@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+// When we want the polls of a particular user
 router.get("/:uid", async (req, res) => {
     const uid = req.params.uid;
     try {
@@ -22,11 +23,13 @@ router.get("/:uid", async (req, res) => {
         }
         const polls = await Poll.find({ userId: uid });
         return res.send(polls);
+        
     } catch (err) {
         return res.status(500).send("Something went wrong, try again later.");
     }
 });
 
+// When we want to add a new poll
 router.post("/", async (req, res) => {
     let poll = new Poll({
         question: req.body.question,
@@ -38,8 +41,6 @@ router.post("/", async (req, res) => {
 
     try {
         poll = await poll.save();
-        const vote = new Vote({ questionId: poll._id });
-        await vote.save();
         return res.status(200).send(poll);
     } catch (err) {
         return res
@@ -59,7 +60,17 @@ router.put("/:qid", async (req, res) => {
             return res.send("Already voted");
         }
         poll.votes.push(req.body.userId);
+
+        if(req.body.option === 0) {
+            poll.votesA.push(req.body.userId);
+        }
+
+        if(req.body.option === 1) {
+            poll.votesB.push(req.body.userId);
+        }
+
         poll = await poll.save();
+
         return res.send(poll);
     } catch (err) {
         return res.status(400).send("Something went wrong, try again later.");
