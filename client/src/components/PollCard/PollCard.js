@@ -5,9 +5,6 @@ const Clickable = (props) => {
     return (
         <div className={classes.OptionCard} onClick={props.onClick}>
             {props.option}
-            {
-                props.votes ? <div className={classes.Count}>{props.votes}</div> : null
-            }
         </div>
     );
 };
@@ -30,25 +27,23 @@ const PollCard = (props) => {
                     {props.clickable ? (
                         <>
                             <Clickable
-                                option={props.data.options[0]}
-                                votes={props.data.votes ? props.data.votes[0] : null}
+                                option={props.data.optionA}
                                 onClick={() => props.clicked(0)}
                             />
                             <Clickable
-                                option={props.data.options[1]}
-                                votes={props.data.votes ? props.data.votes[1] : null}
+                                option={props.data.optionB}
                                 onClick={() => props.clicked(1)}
                             />
                         </>
                     ) : (
                         <>
                             <NonClickable
-                                option={props.data.options[0]}
-                                votes={props.data.votes[0]}
+                                option={props.data.optionA}
+                                votes={props.data.votesA.length}
                             />
                             <NonClickable
-                                option={props.data.options[1]}
-                                votes={props.data.votes[1]}
+                                option={props.data.optionB}
+                                votes={props.data.votesB.length}
                             />
                         </>
                     )}
@@ -57,7 +52,7 @@ const PollCard = (props) => {
             {props.delete && (
                 <>
                     <div className={classes.Line}></div>
-                    <div className={classes.Btn}>
+                    <div className={classes.Btn} onClick={props.clicked}>
                         <div className={classes.DeleteBtn}>DELETE POLL</div>
                     </div>
                 </>

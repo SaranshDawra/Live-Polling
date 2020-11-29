@@ -77,4 +77,22 @@ router.put("/:qid", async (req, res) => {
     }
 });
 
+router.delete('/:qid', async (req, res) => {
+    try {
+        let poll = await Poll.findByIdAndRemove(req.params.qid);
+        if (!poll) {
+            return res
+                .status(404)
+                .send("Poll ID not found");
+        }
+        poll = await Poll.find();
+        console.log(poll);
+        res.send(poll);
+    } catch (err) {
+        return res
+            .status(404)
+            .send("Something went wrong try again later");
+    }
+});
+
 module.exports = router;
