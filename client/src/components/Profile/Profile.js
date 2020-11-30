@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Banner from "../Banner/Banner";
 import StatsCard from "../StatsCard/StatsCard";
 import PollCard from "../PollCard/PollCard";
+import { AuthContext } from "../../context/auth-context";
 import classes from "./profile.module.css";
-
-const uid = "5fbebd9f0cab5953880f1334";
 
 const Profile = () => {
     const [profile, setProfile] = useState();
+
+    const auth = useContext(AuthContext);
+    const uid = auth.userId;
 
     useEffect(() => {
         axios
@@ -20,7 +22,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [uid]);
 
     const pollDeleteHandler = (qid) => {
         axios

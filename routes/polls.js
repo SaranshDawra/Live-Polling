@@ -1,6 +1,7 @@
 const express = require("express");
 const Poll = require("../models/poll");
 const User = require("../models/user");
+const auth = require('../middleware/auth');
 const router = express();
 
 // When we render the poll on the all polls page
@@ -30,7 +31,7 @@ router.get("/:uid", async (req, res) => {
 });
 
 // When we want to add a new poll
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     let poll = new Poll({
         question: req.body.question,
         optionA: req.body.optionA,
@@ -86,7 +87,6 @@ router.delete('/:qid', async (req, res) => {
                 .send("Poll ID not found");
         }
         poll = await Poll.find();
-        console.log(poll);
         res.send(poll);
     } catch (err) {
         return res

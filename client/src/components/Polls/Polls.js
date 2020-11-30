@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
 import Search from "./Search/Search";
 import PollCard from "../PollCard/PollCard";
+import { AuthContext } from "../../context/auth-context";
 import classes from "./polls.module.css";
 import axios from "axios";
 
-// const userId = "5fbfe3857fbcdf5b44acdb42";
-const userId = "5fbfe36f7fbcdf5b44acdb41";
-// const userId = "5fbebd9f0cab5953880f1334";
 
 const Polls = () => {
     const [value, setValue] = useState("");
     const [polls, setPolls] = useState([]);
+
+    const auth = useContext(AuthContext);
+    const userId = auth.userId;
 
     useEffect(() => {
         axios

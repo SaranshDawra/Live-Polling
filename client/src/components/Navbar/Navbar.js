@@ -1,16 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
+import { AuthContext } from "../../context/auth-context";
 import classes from "./navbar.module.css";
 
 const Navbar = () => {
+    const auth = useContext(AuthContext);
 
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsOpen((prevState) => !prevState);
     };
+
+    let links = null;
+
+    if (!auth.token) {
+        links = (
+            <ul className={classes.navUl}>
+                <li>
+                    <Link
+                        to="/signin"
+                        className={[classes.Link, classes.BtnInverse].join(" ")}
+                    >
+                        SIGNIN
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to="/signup"
+                        className={[classes.Link, classes.BtnSolid].join(" ")}
+                    >
+                        SIGNUP
+                    </Link>
+                </li>
+            </ul>
+        );
+    } else {
+        links = (
+            <ul className={classes.navUl}>
+                <li>
+                    <Link
+                        to="/polls"
+                        className={[classes.Link, classes.BtnInverse].join(" ")}
+                    >
+                        POLLS
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to={`/profile/${auth.userId}`}
+                        className={[classes.Link, classes.BtnInverse].join(" ")}
+                    >
+                        PROFILE
+                    </Link>
+                </li>
+                <li>
+                    <div
+                        className={[classes.Link, classes.BtnSolid].join(" ")}
+                        onClick={() => auth.logout()}
+                    >
+                        LOGOUT
+                    </div>
+                </li>
+            </ul>
+        );
+    }
 
     return (
         <div className={classes.Toolbar}>
@@ -23,33 +79,7 @@ const Navbar = () => {
                         className={classes.Hamburger}
                         onClick={toggleSidebar}
                     />
-                    <ul className={classes.navUl}>
-                        <li>
-                            <Link
-                                to="/signin"
-                                className={[classes.Link, classes.BtnInverse].join(' ')}
-                            >
-                                SIGNIN
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/signup"
-                                className={[classes.Link, classes.BtnSolid].join(' ')}
-                            >
-                                SIGNUP
-                            </Link>
-                        </li>
-                        {/* <li>
-                            <NavLink
-                                to="/gethired"
-                                className={classes.Link}
-                                activeClassName={classes.Selected}
-                            >
-                                Jobs
-                            </NavLink>
-                        </li> */}
-                    </ul>
+                    {links}
                 </nav>
             </div>
             <Sidebar isOpen={isOpen} clicked={toggleSidebar} />
