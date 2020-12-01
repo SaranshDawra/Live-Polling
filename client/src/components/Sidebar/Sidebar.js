@@ -77,7 +77,7 @@ const Sidebar = (props) => {
                 </li>
                 <li>
                     <Link
-                        to={`/profile/${auth.userId}`}
+                        to={`/profile`}
                         className={classes.Link}
                         onClick={props.clicked}
                     >

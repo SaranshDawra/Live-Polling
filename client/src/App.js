@@ -2,8 +2,7 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Route,
-    Switch,
-    Redirect,
+    Switch
 } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
@@ -24,17 +23,15 @@ const App = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/signin" exact component={Login} />
                 <Route path="/signup" exact component={Signup} />
-                <Redirect to="/" />
             </Switch>
         );
     } else {
         router = (
             <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/profile/:uid" exact component={Profile} />
+                <Route path="/profile" exact component={Profile} />
                 <Route path="/polls" exact component={Polls} />
                 <Route path="/add/poll" exact component={AddPoll} />
-                <Redirect to="/" />
             </Switch>
         );
     }

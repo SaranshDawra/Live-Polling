@@ -19,7 +19,6 @@ const Login = () => {
                 password,
             })
             .then((user) => {
-                console.log(user.data);
                 auth.login(user.data.token, user.data.userId);
                 history.push("/polls");
             })

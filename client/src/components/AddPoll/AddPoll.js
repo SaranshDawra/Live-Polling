@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import {useHistory} from 'react-router-dom';
+import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import classes from "./addpoll.module.css";
-
-const userId = "5fbebd9f0cab5953880f1334";
 
 const AddPoll = () => {
     const [question, setQuestion] = useState("");
     const [optionA, setOptionA] = useState("");
     const [optionB, setOptionB] = useState("");
+
+    const auth = useContext(AuthContext);
+    const userId = auth.userId;
 
     const history = useHistory();
 
@@ -26,13 +28,12 @@ const AddPoll = () => {
                 },
                 {
                     headers: {
-                        "Test-Header": "test-value",
+                        "Auth-Token": auth.token,
                     },
                 }
             )
             .then((res) => {
-                console.log(res);
-                history.push("/polls");
+                history.push('/polls');
             })
             .catch((err) => {
                 console.log(err);

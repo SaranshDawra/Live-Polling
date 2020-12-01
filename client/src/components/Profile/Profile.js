@@ -15,18 +15,26 @@ const Profile = () => {
 
     useEffect(() => {
         axios
-            .get(`/api/polls/${uid}`)
+            .get(`/api/polls/${uid}`, {
+                headers: {
+                    "Auth-Token": auth.token,
+                },
+            })
             .then((profile) => {
                 setProfile(profile.data);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, [uid]);
+    }, [uid, auth.token]);
 
     const pollDeleteHandler = (qid) => {
         axios
-            .delete(`/api/polls/${qid}`)
+            .delete(`/api/polls/${qid}`, {
+                headers: {
+                    "Auth-Token": auth.token,
+                },
+            })
             .then((profile) => {
                 setProfile(profile.data);
             })

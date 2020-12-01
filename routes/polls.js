@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // When we want the polls of a particular user
-router.get("/:uid", async (req, res) => {
+router.get("/:uid", auth, async (req, res) => {
     const uid = req.params.uid;
     try {
         const user = await User.findById(uid);
@@ -50,7 +50,7 @@ router.post("/", auth, async (req, res) => {
     }
 });
 
-router.put("/:qid", async (req, res) => {
+router.put("/:qid", auth, async (req, res) => {
     const qid = req.params.qid;
     try {
         let poll = await Poll.findById(qid);
@@ -78,7 +78,7 @@ router.put("/:qid", async (req, res) => {
     }
 });
 
-router.delete('/:qid', async (req, res) => {
+router.delete('/:qid', auth, async (req, res) => {
     try {
         let poll = await Poll.findByIdAndRemove(req.params.qid);
         if (!poll) {

@@ -39,3 +39,10 @@
     flex-direction: column;
     align-items: center;
 }
+
+.NoPolls {
+    font-size: 35px;
+    font-weight: 800;
+    color: #FF5972;
+    margin: 10px;
+}

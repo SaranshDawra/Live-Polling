@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
@@ -7,6 +8,7 @@ import classes from "./navbar.module.css";
 
 const Navbar = () => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +52,7 @@ const Navbar = () => {
                 </li>
                 <li>
                     <Link
-                        to={`/profile/${auth.userId}`}
+                        to={`/profile`}
                         className={[classes.Link, classes.BtnInverse].join(" ")}
                     >
                         PROFILE
@@ -59,7 +61,10 @@ const Navbar = () => {
                 <li>
                     <div
                         className={[classes.Link, classes.BtnSolid].join(" ")}
-                        onClick={() => auth.logout()}
+                        onClick={() => {
+                            history.push('/');
+                            auth.logout();
+                        }}
                     >
                         LOGOUT
                     </div>
