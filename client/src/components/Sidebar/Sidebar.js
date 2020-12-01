@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import { FaTimes } from "react-icons/fa";
 import classes from "./sidebar.module.css";
 
 const Sidebar = (props) => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     const closeHandler = () => {
+        history.push("/");
         auth.logout();
         props.clicked();
     };
