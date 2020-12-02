@@ -11,6 +11,11 @@
     width: 80%;
 }
 
+.IconBtn {
+    display: flex;
+    justify-content: center;
+}
+
 .IconContainer {
     height: 30px;
     width: 30px;
@@ -20,6 +25,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50px;
+    margin: 0pc 45px;
 }
 
 .Icon {

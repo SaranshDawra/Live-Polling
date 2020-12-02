@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaUndoAlt } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
 import Search from "./Search/Search";
 import PollCard from "../PollCard/PollCard";
@@ -33,6 +33,21 @@ const Polls = () => {
         setValue(event.target.value);
     };
 
+    const getAllHandler = () => {
+        axios
+            .get("/api/polls", {
+                headers: {
+                    "Auth-Token": auth.token,
+                },
+            })
+            .then((polls) => {
+                setPolls(polls.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const formSubmitHandler = (event) => {
         event.preventDefault();
         axios
@@ -52,7 +67,10 @@ const Polls = () => {
                             },
                         })
                         .then((poll) => {
-                            setPolls(poll.data);
+                            console.log(poll.data);
+                            if (poll && poll.data.length !== 0) {
+                                setPolls(poll.data);
+                            }
                         })
                         .catch((err) => {
                             console.log(err);
@@ -96,12 +114,28 @@ const Polls = () => {
                         onSubmit={formSubmitHandler}
                     />
                 </div>
-                <div className={classes.IconContainer}>
-                    <Link className={classes.Link} to="/add/poll">
-                        <FaPlus className={classes.Icon} />
-                    </Link>
+                <div className={classes.IconBtn}>
+                    <div>
+                        <div className={classes.IconContainer}>
+                            <Link className={classes.Link} to="/add/poll">
+                                <FaPlus className={classes.Icon} />
+                            </Link>
+                        </div>
+                        <h3 className={classes.Typo}>ADD A POLL</h3>
+                    </div>
+                    <div>
+                        <div
+                            className={classes.IconContainer}
+                            onClick={getAllHandler}
+                        >
+                            <div className={classes.Link}>
+                                <FaUndoAlt className={classes.Icon} />
+                            </div>
+                        </div>
+                        <h3 className={classes.Typo}>GET ALL POLLS</h3>
+                    </div>
                 </div>
-                <h3 className={classes.Typo}>ADD A POLL</h3>
+
                 <div className={classes.PollContainer}>
                     {polls.length === 0 && (
                         <>

@@ -20,7 +20,7 @@ const Login = () => {
             })
             .then((user) => {
                 auth.login(user.data.token, user.data.userId);
-                history.push("/polls");
+                history.replace("/polls");
             })
             .catch((err) => {
                 console.log(err);
