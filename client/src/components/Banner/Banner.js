@@ -8,8 +8,9 @@ const Banner = () => {
             <div className={classes.BannerText}>
                 <h3>Welcome back!</h3>
                 <div>
-                    Velit reprehenderit proident magna velit duis ea proident
-                    occaecat ex nisi dolor consequat ullamco nisi.
+                    Increasing engagement and getting instant feedback has never
+                    been easier. Polls take seconds to create. Type your
+                    question and hit “Create”. That’s it!
                 </div>
             </div>
             <div className={classes.ImgContainer}>

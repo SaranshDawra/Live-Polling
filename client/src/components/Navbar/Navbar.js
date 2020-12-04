@@ -26,7 +26,7 @@ const Navbar = () => {
                         to="/signin"
                         className={[classes.Link, classes.BtnInverse].join(" ")}
                     >
-                        SIGNIN
+                        SIGN IN
                     </Link>
                 </li>
                 <li>
@@ -34,7 +34,7 @@ const Navbar = () => {
                         to="/signup"
                         className={[classes.Link, classes.BtnSolid].join(" ")}
                     >
-                        SIGNUP
+                        SIGN UP
                     </Link>
                 </li>
             </ul>

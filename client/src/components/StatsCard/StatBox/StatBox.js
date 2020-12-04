@@ -5,7 +5,7 @@ const StatBox = (props) => {
     return (
         <div className={classes.StatBox}>
                 <div className={classes.Count}>{props.count}</div>
-                <div className={classes.Heading}>Heading</div>
+                <div className={classes.Heading}>{props.heading}</div>
         </div>
     )
 }

@@ -79,7 +79,7 @@ const AddPoll = () => {
                                 className={classes.Btn}
                                 onClick={pollSubmitHandler}
                             >
-                                SUBMIT
+                                CREATE
                             </button>
                         </div>
                     </form>

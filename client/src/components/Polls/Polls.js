@@ -11,8 +11,17 @@ import axios from "axios";
 const Polls = () => {
     const [value, setValue] = useState("");
     const [polls, setPolls] = useState([]);
+    const [error, setError] = useState({ err: false, msg: "" });
     const auth = useContext(AuthContext);
     const userId = auth.userId;
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setError({ err: false, msg: "" });
+        }, 5000);
+
+        return () => clearTimeout(timeout);
+    }, [error]);
 
     useEffect(() => {
         axios
@@ -59,6 +68,7 @@ const Polls = () => {
             .then((user) => {
                 if (user.data.hasOwnProperty("found") && !user.data.found) {
                     console.log(user.data.msg);
+                    setError({ err: true, msg: "USER NOT FOUND" });
                 } else {
                     axios
                         .get(`/api/polls/${user.data._id}`, {
@@ -70,6 +80,10 @@ const Polls = () => {
                             console.log(poll.data);
                             if (poll && poll.data.length !== 0) {
                                 setPolls(poll.data);
+                            }
+
+                            if (poll && poll.data.length === 0) {
+                                setError({ err: true, msg: "NO POLLS FOUND" });
                             }
                         })
                         .catch((err) => {
@@ -84,7 +98,6 @@ const Polls = () => {
     };
 
     const voteDisplayHandler = (option, qid) => {
-        console.log("Clicked", option);
         axios
             .put(
                 `/api/polls/${qid}`,
@@ -107,6 +120,9 @@ const Polls = () => {
         <>
             <Navbar />
             <div className={classes.Container}>
+                {error.err ? (
+                    <div className={classes.Error}>{error.msg}</div>
+                ) : null}
                 <div className={classes.ContainerFluid}>
                     <Search
                         value={value}

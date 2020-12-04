@@ -114,6 +114,16 @@
     outline: none;
 }
 
+.Err {
+    font-size: 20px;
+    color: #FF5972;
+    font-weight: 400;
+    padding: 10px 15px;
+    background-color: #FCDBE2;
+    width: 250px;
+    border-radius: 25px;
+}
+
 .CreateAccount {
     font-size: 15px;
     text-decoration: none;

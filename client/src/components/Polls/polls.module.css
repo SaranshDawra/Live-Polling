@@ -28,6 +28,16 @@
     margin: 0pc 45px;
 }
 
+.Error {
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: 400;
+    color: #FF5972;
+    background-color: #FCDBE2;
+    padding: 10px 15px;
+    border-radius: 25px;
+}
+
 .Icon {
     font-size: 20px;
     color: #F4F4F4;

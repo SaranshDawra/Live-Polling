@@ -38,7 +38,7 @@ const Sidebar = (props) => {
                         className={classes.Link}
                         onClick={props.clicked}
                     >
-                        SIGNIN
+                        SIGN IN
                     </Link>
                 </li>
                 <li>
@@ -47,7 +47,7 @@ const Sidebar = (props) => {
                         className={classes.Link}
                         onClick={props.clicked}
                     >
-                        SIGNUP
+                        SIGN UP
                     </Link>
                 </li>
             </ul>

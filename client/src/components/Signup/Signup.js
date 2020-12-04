@@ -73,7 +73,7 @@ const Signup = () => {
                     </div>
 
                     <button className={classes.Btn} onClick={signupHandler}>
-                        SIGNUP
+                        SIGN UP
                     </button>
                 </form>
                 <Link to="/signin" className={classes.CreateAccount}>
@@ -88,7 +88,7 @@ const Signup = () => {
                 </p>
                 <div className={classes.SignupBtn}>
                     <Link to="/signin" className={classes.SignupLink}>
-                        SIGNIN
+                        SIGN IN
                     </Link>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth-context";
@@ -7,9 +7,18 @@ import classes from "./login.module.css";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
     const history = useHistory();
 
     const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setError(false);
+        }, 5000);
+
+        return () => clearTimeout(timeout);
+    }, [error]);
 
     const signinHandler = (e) => {
         e.preventDefault();
@@ -23,7 +32,7 @@ const Login = () => {
                 history.replace("/polls");
             })
             .catch((err) => {
-                console.log(err);
+                setError(true);
             });
     };
 
@@ -37,7 +46,7 @@ const Login = () => {
                 </p>
                 <div className={classes.SignupBtn}>
                     <Link to="/signup" className={classes.SignupLink}>
-                        SIGNUP
+                        SIGN UP
                     </Link>
                 </div>
             </div>
@@ -74,8 +83,15 @@ const Login = () => {
                         />
                     </div>
 
+                    {error ? (
+                        <div className={classes.Err}>
+                            Could not log you in, please check your credentials
+                            and try again.
+                        </div>
+                    ) : null}
+
                     <button className={classes.Btn} onClick={signinHandler}>
-                        SIGNIN
+                        SIGN IN
                     </button>
                 </form>
                 <Link to="/signup" className={classes.CreateAccount}>
