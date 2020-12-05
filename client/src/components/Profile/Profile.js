@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Bar } from "react-chartjs-2";
+import { AiOutlineStop } from "react-icons/ai";
+import { FaTrashAlt, FaPlay } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Banner from "../Banner/Banner";
 import StatsCard from "../StatsCard/StatsCard";
-import PollCard from "../PollCard/PollCard";
 import { AuthContext } from "../../context/auth-context";
 import classes from "./profile.module.css";
 
@@ -13,6 +15,7 @@ const Profile = () => {
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
+    const [pollId, setPollId] = useState("");
 
     const auth = useContext(AuthContext);
     const uid = auth.userId;
@@ -49,6 +52,27 @@ const Profile = () => {
             });
     };
 
+    const pollHaltHandler = (qid) => {
+        axios
+            .get(`/api/polls/halt/${qid}`, {
+                headers: {
+                    "Auth-Token": auth.token,
+                },
+            })
+            .then((poll) => {
+                const profileCopy = [...profile];
+                profileCopy.forEach((item) => {
+                    if (item._id === poll.data._id) {
+                        item.isHalted = !item.isHalted;
+                    }
+                });
+                setProfile(profileCopy);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const statsHandler = (data) => {
         setTotal(data.length);
         let min = Number.MAX_VALUE,
@@ -57,21 +81,21 @@ const Profile = () => {
             if (poll.votesA.length >= max) {
                 max = poll.votesA.length;
             }
-            
+
             if (poll.votesB.length >= max) {
                 max = poll.votesB.length;
             }
 
             if (poll.votesA.length <= min) {
                 min = poll.votesA.length;
-            } 
-            
+            }
+
             if (poll.votesB.length <= min) {
                 min = poll.votesB.length;
             }
         });
 
-        if(min === Number.MAX_VALUE) {
+        if (min === Number.MAX_VALUE) {
             min = 0;
         }
 
@@ -80,16 +104,15 @@ const Profile = () => {
 
         const users = [];
 
-        data.forEach(poll => {
-            poll.votes.forEach(uid => {
-                if(!users.includes(uid)) {
+        data.forEach((poll) => {
+            poll.votes.forEach((uid) => {
+                if (!users.includes(uid)) {
                     users.push(uid);
                 }
             });
         });
 
         setTotalUsers(users.length);
-        
     };
 
     return (
@@ -99,7 +122,12 @@ const Profile = () => {
                 <div className={classes.InnerContainer}>
                     <Banner />
                     <div className={classes.PollSection}>
-                        <StatsCard total={total} min={min} max={max} totalUsers={totalUsers}/>
+                        <StatsCard
+                            total={total}
+                            min={min}
+                            max={max}
+                            totalUsers={totalUsers}
+                        />
                         <div className={classes.Polls}>
                             {profile && profile.length === 0 ? (
                                 <div className={classes.NoPolls}>
@@ -108,16 +136,111 @@ const Profile = () => {
                             ) : null}
                             {profile &&
                                 profile.map((poll) => {
+                                    const chartData = {
+                                        labels: [poll.optionA, poll.optionB],
+                                        datasets: [
+                                            {
+                                                label: "Poll Result",
+                                                data: [
+                                                    poll.votesA.length,
+                                                    poll.votesB.length,
+                                                ],
+                                                backgroundColor: [
+                                                    "rgba(255, 99, 132, 0.2)",
+                                                    "rgba(54, 162, 235, 0.2)",
+                                                ],
+                                                borderColor: [
+                                                    "rgba(255, 99, 132, 1)",
+                                                    "rgba(54, 162, 235, 1)",
+                                                ],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    };
+
                                     return (
-                                        <PollCard
-                                            clickable={false}
-                                            delete={true}
-                                            data={poll}
-                                            key={poll._id}
-                                            clicked={() =>
-                                                pollDeleteHandler(poll._id)
-                                            }
-                                        />
+                                        <React.Fragment key={poll._id}>
+                                            <div className={classes.Card}>
+                                                <div className={classes.Question} >{poll.question}</div>
+                                                <div
+                                                    onClick={() => {
+                                                        if (
+                                                            pollId === poll._id
+                                                        ) {
+                                                            setPollId("");
+                                                        } else {
+                                                            setPollId(poll._id);
+                                                        }
+                                                    }}
+                                                    className={
+                                                        classes.GraphView
+                                                    }
+                                                >
+                                                    Graph View
+                                                </div>
+                                                {pollId === poll._id ? (
+                                                    <Chart
+                                                        cName={classes.Closed}
+                                                        chartData={chartData}
+                                                    />
+                                                ) : (
+                                                    <Chart
+                                                        cName={classes.Open}
+                                                        chartData={chartData}
+                                                    />
+                                                )}
+                                                <div className={classes.Line}></div>
+                                                <div className={classes.CardFooter}>
+                                                    {poll.isHalted ? (
+                                                        <div className={classes.StatusStop}>
+                                                            <div className={classes.Stop}></div>
+                                                            <div>Stopped</div>
+                                                        </div>
+                                                    ) : 
+                                                    (
+                                                        <div className={classes.StatusAct}>
+                                                            <div className={classes.Active}></div>
+                                                            <div>Active</div>
+                                                        </div>
+                                                    )}
+                                                    <div className={classes.IconContainer}>
+                                                        {poll.isHalted ? (
+                                                            <span className={classes.IconSpan}>
+                                                                <FaPlay
+                                                                    className={classes.Icon}
+                                                                    onClick={() =>
+                                                                        pollHaltHandler(
+                                                                            poll._id
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </span>
+                                                        ) : (
+                                                            <span className={classes.IconSpan}>
+                                                                <AiOutlineStop
+                                                                    className={classes.Icon}
+                                                                    onClick={() =>
+                                                                        pollHaltHandler(
+                                                                            poll._id
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </span>
+                                                        )}
+                                                        <span className={classes.IconSpan}>
+                                                            <FaTrashAlt
+                                                                className={classes.Icon}
+                                                                onClick={() =>
+                                                                    pollDeleteHandler(
+                                                                        poll._id
+                                                                    )
+                                                                }
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
                                     );
                                 })}
                         </div>
@@ -125,6 +248,14 @@ const Profile = () => {
                 </div>
             </div>
         </>
+    );
+};
+
+const Chart = (props) => {
+    return (
+        <div className={props.cName}>
+            <Bar data={props.chartData} />
+        </div>
     );
 };
 

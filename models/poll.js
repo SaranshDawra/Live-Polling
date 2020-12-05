@@ -30,6 +30,10 @@ const pollSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
+    isHalted: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const Poll = mongoose.model("Poll", pollSchema);

@@ -78,6 +78,24 @@ router.put("/:qid", auth, async (req, res) => {
     }
 });
 
+router.get("/halt/:qid", auth, async (req, res) => {
+    const qid = req.params.qid;
+    try {
+        let poll = await Poll.findById(qid);
+        if (!poll) {
+            return res.status(404).send("No Poll Exists");
+        }
+
+        poll.isHalted = !poll.isHalted;
+
+        poll = await poll.save();
+
+        return res.send(poll);
+    } catch (err) {
+        return res.status(400).send("Something went wrong, try again later.");
+    }
+});
+
 router.delete('/:qid', auth, async (req, res) => {
     try {
         let poll = await Poll.findByIdAndRemove(req.params.qid);

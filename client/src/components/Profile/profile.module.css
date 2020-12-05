@@ -23,11 +23,106 @@
     border-radius: 25px;
 }
 
+.Closed {
+    display: block;
+}
+
+.Open {
+    display: none;
+}
+
+.Card {
+    border: 2px solid #FF5972;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.Question {
+    background-color: #FCDBE2;
+    padding: 15px;
+    font-size: 25px;
+    font-weight: 700;
+    color: #FF5972;
+}
+
+.GraphView {
+    padding: 5px 0px;
+    margin: 15px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    width: 100px;
+    background-color: #FF5972;
+    color: #F4F4F4;
+    text-align: center;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.CardFooter {
+    display: flex;
+    align-items: center;
+}
+
+.StatusStop {
+    display: flex;
+    width: 30%;
+    font-size: 20px;
+    padding-left: 15px;
+    font-weight: 700;
+    color: red;
+}
+
+.Stop {
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    background-color: red;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.StatusAct {
+    display: flex;
+    width: 30%;
+    font-size: 20px;
+    padding-left: 15px;
+    font-weight: 700;
+    color: rgb(32, 202, 32);
+}
+
+.Active {
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    background-color: rgb(32, 202, 32);
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.IconContainer {
+    width: 70%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.Line {
+    height: 1px;
+    width: 100%;
+    background-color: #FF5972;
+}
+
+.IconSpan {
+    margin: 15px;
+    font-size: 25px;
+    color: #FF5972;
+}
+
 .NoPolls {
     text-align: center;
     font-size: 35px;
     font-weight: 900;
-    color: #FF5972;
+    color: #ff5972;
 }
 
 @media screen and (max-width: 768px) {
