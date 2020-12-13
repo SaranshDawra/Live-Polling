@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaPlus, FaUndoAlt } from "react-icons/fa";
+import { FaPlus, FaUndoAlt, FaFilter } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
 import Search from "./Search/Search";
 import PollCard from "../PollCard/PollCard";
@@ -116,6 +116,45 @@ const Polls = () => {
             });
     };
 
+    const filterHandler = (e) => {
+        console.log("Clicked", e.target.value);
+        axios
+            .get("/api/polls", {
+                headers: {
+                    "Auth-Token": auth.token,
+                },
+            })
+            .then((polls) => {
+                setPolls(polls.data);
+                if (e.target.value === "stopped") {
+                    const pollCopy = polls.data.filter((poll) => {
+                        if (poll.isHalted) {
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    setPolls(pollCopy);
+                } else if (e.target.value === "active") {
+                    const pollCopy = polls.data.filter((poll) => {
+                        if (!poll.isHalted) {
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    setPolls(pollCopy);
+                } else if(e.target.value === "latest") {
+                    const pollCopy = [...polls.data];
+                    pollCopy.reverse();
+                    setPolls(pollCopy);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <>
             <Navbar />
@@ -130,28 +169,70 @@ const Polls = () => {
                         onSubmit={formSubmitHandler}
                     />
                 </div>
-                <div className={classes.IconBtn}>
-                    <div>
-                        <div className={classes.IconContainer}>
-                            <Link className={classes.Link} to="/add/poll">
-                                <FaPlus className={classes.Icon} />
+            </div>
+            <div className={classes.Poll}>
+                <div className={classes.SideCard}>
+                    <div className={classes.IconContainer}>
+                        <span className={classes.Icon}>
+                            <Link to="/add/poll" className={classes.Link}>
+                                <FaPlus />
                             </Link>
-                        </div>
-                        <h3 className={classes.Typo}>ADD A POLL</h3>
+                        </span>
+                        <span className={classes.Title}>
+                            <Link to="/add/poll" className={classes.Link}>
+                                ADD POLL
+                            </Link>
+                        </span>
                     </div>
-                    <div>
-                        <div
-                            className={classes.IconContainer}
-                            onClick={getAllHandler}
-                        >
-                            <div className={classes.Link}>
-                                <FaUndoAlt className={classes.Icon} />
-                            </div>
+                    <div className={classes.IconContainer}>
+                        <span className={classes.Icon} onClick={getAllHandler}>
+                            <FaUndoAlt />
+                        </span>
+                        <span className={classes.Title} onClick={getAllHandler}>
+                            ALL POLLS
+                        </span>
+                    </div>
+                    <div className={classes.IconContainer}>
+                        <span className={classes.Icon}>
+                            <FaFilter />
+                        </span>
+                        <span className={classes.Title}>FILTER</span>
+                        <div className={classes.Options}>
+                            <input
+                                type="radio"
+                                name="options"
+                                value="latest"
+                                onChange={filterHandler}
+                            />
+                            <label htmlFor="latest">LATEST</label>
+                            <br />
+                            <input
+                                type="radio"
+                                name="options"
+                                value="oldest"
+                                onChange={filterHandler}
+                            />
+                            <label htmlFor="oldest">OLDEST</label>
+                            <br />
+                            <input
+                                type="radio"
+                                name="options"
+                                value="active"
+                                onChange={filterHandler}
+                            />
+                            <label htmlFor="active">ACTIVE</label>
+                            <br />
+                            <input
+                                type="radio"
+                                name="options"
+                                value="stopped"
+                                onChange={filterHandler}
+                            />
+                            <label htmlFor="stopped">STOPPED</label>
+                            <br />
                         </div>
-                        <h3 className={classes.Typo}>GET ALL POLLS</h3>
                     </div>
                 </div>
-
                 <div className={classes.PollContainer}>
                     {polls.length === 0 && (
                         <>
@@ -161,12 +242,13 @@ const Polls = () => {
                         </>
                     )}
                     {polls.map((poll) => {
-                        if (poll.votes.includes(userId)) {
+                        if (poll.votes.includes(userId) || poll.isHalted) {
                             return (
                                 <PollCard
                                     clickable={false}
                                     data={poll}
                                     key={poll._id}
+                                    halted={poll.isHalted}
                                 />
                             );
                         } else {

@@ -9,6 +9,8 @@ const AddPoll = () => {
     const [question, setQuestion] = useState("");
     const [optionA, setOptionA] = useState("");
     const [optionB, setOptionB] = useState("");
+    const [optionC, setOptionC] = useState("");
+    const [optionD, setOptionD] = useState("");
 
     const auth = useContext(AuthContext);
     const userId = auth.userId;
@@ -24,6 +26,8 @@ const AddPoll = () => {
                     question,
                     optionA,
                     optionB,
+                    optionC,
+                    optionD,
                     userId,
                 },
                 {
@@ -51,7 +55,7 @@ const AddPoll = () => {
                         <input
                             type="text"
                             required
-                            placeholder="How are you?"
+                            placeholder="Favourite Sport?"
                             className={classes.Input}
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
@@ -60,7 +64,7 @@ const AddPoll = () => {
                         <input
                             type="text"
                             required
-                            placeholder="Good"
+                            placeholder="Cricket"
                             className={classes.Input}
                             value={optionA}
                             onChange={(e) => setOptionA(e.target.value)}
@@ -69,10 +73,28 @@ const AddPoll = () => {
                         <input
                             type="text"
                             required
-                            placeholder="Bad"
+                            placeholder="Football"
                             className={classes.Input}
                             value={optionB}
                             onChange={(e) => setOptionB(e.target.value)}
+                        />
+                        <div className={classes.Label}>Option C</div>
+                        <input
+                            type="text"
+                            required
+                            placeholder="Tennis"
+                            className={classes.Input}
+                            value={optionC}
+                            onChange={(e) => setOptionC(e.target.value)}
+                        />
+                        <div className={classes.Label}>Option D</div>
+                        <input
+                            type="text"
+                            required
+                            placeholder="Badminton"
+                            className={classes.Input}
+                            value={optionD}
+                            onChange={(e) => setOptionD(e.target.value)}
                         />
                         <div className={classes.BtnContainer}>
                             <button

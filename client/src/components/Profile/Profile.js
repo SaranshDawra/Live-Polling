@@ -75,29 +75,29 @@ const Profile = () => {
 
     const statsHandler = (data) => {
         setTotal(data.length);
-        let min = Number.MAX_VALUE,
+        let min = 0,
             max = 0;
         data.forEach((poll) => {
-            if (poll.votesA.length >= max) {
-                max = poll.votesA.length;
+            const tempMax = Math.max(
+                poll.votesA.length,
+                poll.votesB.length,
+                poll.votesC.length,
+                poll.votesD.length
+            );
+            if (tempMax > max) {
+                max = tempMax;
             }
 
-            if (poll.votesB.length >= max) {
-                max = poll.votesB.length;
-            }
-
-            if (poll.votesA.length <= min) {
-                min = poll.votesA.length;
-            }
-
-            if (poll.votesB.length <= min) {
-                min = poll.votesB.length;
+            const tempMin = Math.min(
+                poll.votesA.length,
+                poll.votesB.length,
+                poll.votesC.length,
+                poll.votesD.length
+            );
+            if (tempMin < min) {
+                min = tempMin;
             }
         });
-
-        if (min === Number.MAX_VALUE) {
-            min = 0;
-        }
 
         setMax(max);
         setMin(min);
@@ -137,21 +137,32 @@ const Profile = () => {
                             {profile &&
                                 profile.map((poll) => {
                                     const chartData = {
-                                        labels: [poll.optionA, poll.optionB],
+                                        labels: [
+                                            poll.optionA,
+                                            poll.optionB,
+                                            poll.optionC,
+                                            poll.optionD,
+                                        ],
                                         datasets: [
                                             {
                                                 label: "Poll Result",
                                                 data: [
                                                     poll.votesA.length,
                                                     poll.votesB.length,
+                                                    poll.votesC.length,
+                                                    poll.votesD.length,
                                                 ],
                                                 backgroundColor: [
                                                     "rgba(255, 99, 132, 0.2)",
                                                     "rgba(54, 162, 235, 0.2)",
+                                                    "rgba(255, 206, 86, 0.2)",
+                                                    "rgba(75, 192, 192, 0.2)",
                                                 ],
                                                 borderColor: [
                                                     "rgba(255, 99, 132, 1)",
                                                     "rgba(54, 162, 235, 1)",
+                                                    "rgba(255, 206, 86, 1)",
+                                                    "rgba(75, 192, 192, 1)",
                                                 ],
                                                 borderWidth: 1,
                                             },
@@ -161,7 +172,11 @@ const Profile = () => {
                                     return (
                                         <React.Fragment key={poll._id}>
                                             <div className={classes.Card}>
-                                                <div className={classes.Question} >{poll.question}</div>
+                                                <div
+                                                    className={classes.Question}
+                                                >
+                                                    {poll.question}
+                                                </div>
                                                 <div
                                                     onClick={() => {
                                                         if (
@@ -189,25 +204,56 @@ const Profile = () => {
                                                         chartData={chartData}
                                                     />
                                                 )}
-                                                <div className={classes.Line}></div>
-                                                <div className={classes.CardFooter}>
+                                                <div
+                                                    className={classes.Line}
+                                                ></div>
+                                                <div
+                                                    className={
+                                                        classes.CardFooter
+                                                    }
+                                                >
                                                     {poll.isHalted ? (
-                                                        <div className={classes.StatusStop}>
-                                                            <div className={classes.Stop}></div>
+                                                        <div
+                                                            className={
+                                                                classes.StatusStop
+                                                            }
+                                                        >
+                                                            <div
+                                                                className={
+                                                                    classes.Stop
+                                                                }
+                                                            ></div>
                                                             <div>Stopped</div>
                                                         </div>
-                                                    ) : 
-                                                    (
-                                                        <div className={classes.StatusAct}>
-                                                            <div className={classes.Active}></div>
+                                                    ) : (
+                                                        <div
+                                                            className={
+                                                                classes.StatusAct
+                                                            }
+                                                        >
+                                                            <div
+                                                                className={
+                                                                    classes.Active
+                                                                }
+                                                            ></div>
                                                             <div>Active</div>
                                                         </div>
                                                     )}
-                                                    <div className={classes.IconContainer}>
+                                                    <div
+                                                        className={
+                                                            classes.IconContainer
+                                                        }
+                                                    >
                                                         {poll.isHalted ? (
-                                                            <span className={classes.IconSpan}>
+                                                            <span
+                                                                className={
+                                                                    classes.IconSpan
+                                                                }
+                                                            >
                                                                 <FaPlay
-                                                                    className={classes.Icon}
+                                                                    className={
+                                                                        classes.Icon
+                                                                    }
                                                                     onClick={() =>
                                                                         pollHaltHandler(
                                                                             poll._id
@@ -216,9 +262,15 @@ const Profile = () => {
                                                                 />
                                                             </span>
                                                         ) : (
-                                                            <span className={classes.IconSpan}>
+                                                            <span
+                                                                className={
+                                                                    classes.IconSpan
+                                                                }
+                                                            >
                                                                 <AiOutlineStop
-                                                                    className={classes.Icon}
+                                                                    className={
+                                                                        classes.Icon
+                                                                    }
                                                                     onClick={() =>
                                                                         pollHaltHandler(
                                                                             poll._id
@@ -227,9 +279,15 @@ const Profile = () => {
                                                                 />
                                                             </span>
                                                         )}
-                                                        <span className={classes.IconSpan}>
+                                                        <span
+                                                            className={
+                                                                classes.IconSpan
+                                                            }
+                                                        >
                                                             <FaTrashAlt
-                                                                className={classes.Icon}
+                                                                className={
+                                                                    classes.Icon
+                                                                }
                                                                 onClick={() =>
                                                                     pollDeleteHandler(
                                                                         poll._id
