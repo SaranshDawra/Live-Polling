@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const path = require("path");
 const users = require("./routes/users");
 const polls = require("./routes/polls");
@@ -7,6 +8,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const URL = process.env.MONGODB_URI;
 

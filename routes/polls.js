@@ -36,6 +36,8 @@ router.post("/", auth, async (req, res) => {
         question: req.body.question,
         optionA: req.body.optionA,
         optionB: req.body.optionB,
+        optionC: req.body.optionC,
+        optionD: req.body.optionD,
         votes: req.body.votes,
         userId: req.body.userId,
     });
@@ -68,6 +70,14 @@ router.put("/:qid", auth, async (req, res) => {
 
         if(req.body.option === 1) {
             poll.votesB.push(req.body.userId);
+        }
+
+        if(req.body.option === 2) {
+            poll.votesC.push(req.body.userId);
+        }
+
+        if(req.body.option === 3) {
+            poll.votesD.push(req.body.userId);
         }
 
         poll = await poll.save();
